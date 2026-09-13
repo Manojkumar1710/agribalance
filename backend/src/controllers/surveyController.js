@@ -22,7 +22,7 @@ export function toRecord(survey) {
   return {
     ...a,
     id: survey.surveyId,
-    farmerKey: survey.farmer.farmerKey,
+    farmerKey: survey.farmer?.farmerKey || a.farmerKey || "",
     overallRisk: survey.overallRisk,
     priority: survey.priority,
     recommendations: survey.recommendations,
@@ -185,13 +185,11 @@ export async function getSurvey(req, res) {
     "farmer",
   );
   if (!row)
-    return res
-      .status(404)
-      .json({
-        success: false,
-        message: "Survey not found",
-        error: "SURVEY_NOT_FOUND",
-      });
+    return res.status(404).json({
+      success: false,
+      message: "Survey not found",
+      error: "SURVEY_NOT_FOUND",
+    });
   res.json({ success: true, data: toRecord(row) });
 }
 export async function updateSurvey(req, res) {
@@ -206,24 +204,20 @@ export async function updateSurvey(req, res) {
     { new: true },
   ).populate("farmer");
   if (!row)
-    return res
-      .status(404)
-      .json({
-        success: false,
-        message: "Survey not found",
-        error: "SURVEY_NOT_FOUND",
-      });
+    return res.status(404).json({
+      success: false,
+      message: "Survey not found",
+      error: "SURVEY_NOT_FOUND",
+    });
   res.json({ success: true, data: toRecord(row) });
 }
 export async function deleteSurvey(req, res) {
   const row = await Survey.findOneAndDelete({ surveyId: req.params.id });
   if (!row)
-    return res
-      .status(404)
-      .json({
-        success: false,
-        message: "Survey not found",
-        error: "SURVEY_NOT_FOUND",
-      });
+    return res.status(404).json({
+      success: false,
+      message: "Survey not found",
+      error: "SURVEY_NOT_FOUND",
+    });
   res.json({ success: true, data: { id: req.params.id } });
 }
