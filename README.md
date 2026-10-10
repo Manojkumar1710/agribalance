@@ -62,7 +62,7 @@ Backend `.env`:
 ```text
 MONGODB_URI=mongodb://localhost:27017/agribalance
 JWT_SECRET=replace_with_a_long_random_secret
-JWT_EXPIRES_IN=7d
+JWT_EXPIRES_IN=14d
 PORT=5000
 NODE_ENV=development
 FRONTEND_URL=http://localhost:5173
